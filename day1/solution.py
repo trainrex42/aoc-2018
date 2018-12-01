@@ -1,21 +1,24 @@
-with open("input") as f:
-  data = [int(l) for l in f.readlines()]
+#!/usr/bin/python3
 
-print("Calculating Part 1")
-print("Part 1:", sum(data))
+def part1(directory):
+  with open(directory + "input") as f:
+    data = [int(l) for l in f.readlines()]
 
-f = 0
-visited = []
-i = 0
+  return sum(data)
 
-print("Calculating Part 2")
+def part2(directory):
+  with open(directory + "input") as f:
+    data = [int(l) for l in f.readlines()]
 
-while f not in visited:
-  visited.append(f)
-  f += data[i]
-  i = (i+1) % len(data)
+  f = 0
+  visited = set()
+  i = 0
+  while f not in visited:
+    visited.add(f)
+    f += data[i]
+    i = (i+1) % len(data)
 
-print("Part 2:", f)
+  return f
 
 
 
