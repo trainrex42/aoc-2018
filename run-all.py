@@ -10,16 +10,16 @@ def loadDay(directory):
 
   return (day.part1, day.part2)
 
-def timeFunction(f, d):
+def timeFunction(f):
   start = datetime.now()
-  r = f(d)
+  r = f()
   t = (datetime.now() - start).total_seconds()
   return (r,t)
 
 def runDay(directory):
   f = loadDay(directory)
-  p1 = timeFunction(f[0], directory)
-  p2 = timeFunction(f[1], directory)
+  p1 = timeFunction(f[0])
+  p2 = timeFunction(f[1])
 
   return p1, p2
 

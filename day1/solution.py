@@ -1,13 +1,17 @@
 #!/usr/bin/python3
 
-def part1(directory):
-  with open(directory + "input") as f:
+import os
+
+directory = os.path.dirname(os.path.realpath(__file__))
+
+def part1():
+  with open(directory + "/input") as f:
     data = [int(l) for l in f.readlines()]
 
   return sum(data)
 
-def part2(directory):
-  with open(directory + "input") as f:
+def part2():
+  with open(directory + "/input") as f:
     data = [int(l) for l in f.readlines()]
 
   f = 0
@@ -20,5 +24,12 @@ def part2(directory):
 
   return f
 
+def main():
+  print("Part 1:", part1())
+  print("Part 2:", part2())
+
+
+if __name__ == "__main__":
+  main()
 
 
