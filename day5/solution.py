@@ -4,32 +4,20 @@ import os
 
 directory = os.path.dirname(os.path.realpath(__file__))
 
+# Stack-based reduce is faster because List.pop() is O(1) at end of list and O(N) in middle
+
 def reduce(poly):
-  pointer = 0
-
-  poly = list(poly)
-
-  while pointer < (len(poly) - 1):
-    l = poly[pointer]
-    r = poly[pointer+1]
-
-    if l != r and l.lower() == r.lower():
-      poly.pop(pointer)
-      poly.pop(pointer)
-    
-    else:
-      pointer += 1
-  
-  return poly
-
-def multiReduce(poly):
-  new_poly = reduce(poly)
-
-  while new_poly != poly:
-    poly = new_poly[:]
-    new_poly = reduce(poly)
-
-  return poly
+  string = poly
+  stack = [string.pop()]
+  while string:
+      if not stack:
+          stack.append(string.pop())
+      if stack[len(stack)-1] == string[len(string)-1].swapcase():
+          stack.pop()
+          string.pop()
+      else:
+          stack.append(string.pop())
+  return stack
 
 def part1():
   with open(directory + "/input") as f:
@@ -37,29 +25,30 @@ def part1():
 
   poly = list(data[0].strip())
 
-  poly = multiReduce(poly)
+  poly = reduce(poly)
   
   return len(poly)
 
 def part2():
   with open(directory + "/input") as f:
-    data = f.readlines()
+    data = f.readlines()[0].strip()
 
-  poly = list(data[0].strip())
+  data = "".join(reduce(list(data)))
 
   units = []
 
-  for c in poly:
-    unit = {c.lower(),c.upper()}
+  for o in range(65,91):
+    c = chr(o)
+    unit = (c.lower(),c.upper())
     if unit not in units:
       units.append(unit)
   
   lens = dict()
 
   for unit in units:
-    test_poly = [x for x in poly if x not in unit]
+    test_poly = list(data.replace(unit[0], "").replace(unit[1], ""))
 
-    rpoly = multiReduce(test_poly)
+    rpoly = reduce(test_poly)
 
     lens[str(unit)] = len(rpoly)
   
