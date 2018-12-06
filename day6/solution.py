@@ -61,7 +61,7 @@ def part1():
 
 
 def part2():
-  extra = 10000
+  extra = 15
 
   with open(directory + "/input") as f:
     data = f.readlines()
