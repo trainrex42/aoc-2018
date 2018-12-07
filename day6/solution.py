@@ -2,23 +2,10 @@
 
 import os, math
 
-directory = os.path.dirname(os.path.realpath(__file__))\
-
-def get_min_key(d):
-  m = math.inf
-  k = None
-  for key in d:
-    if d[key] < m:
-      m = d[key]
-      k = key
-    elif d[key] == m:
-      return "."
-  
-  return k
-
+directory = os.path.dirname(os.path.realpath(__file__))
 
 def part1():
-  extra = 15
+  extra = 0
 
   with open(directory + "/input") as f:
     data = f.readlines()
@@ -61,7 +48,7 @@ def part1():
 
 
 def part2():
-  extra = 15
+  extra = 0
 
   with open(directory + "/input") as f:
     data = f.readlines()
