@@ -4,29 +4,24 @@ import os
 
 directory = os.path.dirname(os.path.realpath(__file__))
 
-def part1():
-  with open(directory + "/input") as f:
-    data = f.readlines()[0].strip()
+class Node:
+  def __init__(self, val=None, nxt=None, prev=None):
+    self.val = val
+    self.next = nxt
+    self.prev = prev
 
-  work = data.split()
-  players, points = int(work[0]), int(work[-2])
+  def __str__(self):
+    out = [self.val]
 
-  class Node:
-    def __init__(self, val=None, nxt=None, prev=None):
-      self.val = val
-      self.next = nxt
-      self.prev = prev
+    current = self.next
 
-    def __str__(self):
-      out = [self.val]
+    while current != self:
+      out.append(current.val)
+      current = current.next
 
-      current = self.next
+    return str(out)
 
-      while current != self:
-        out.append(current.val)
-        current = current.next
-
-      return str(out)
+def play_game(players, points):
   active = Node(0)
   active.next = active
   active.prev = active
@@ -67,6 +62,19 @@ def part1():
 
     current_marble += 1
     current_player = (current_player + 1) % players
+
+  return scores
+
+
+def part1():
+  with open(directory + "/input") as f:
+    data = f.readlines()[0].strip()
+
+  work = data.split()
+  players, points = int(work[0]), int(work[-2])
+
+  scores = play_game(players, points)
+  
   return scores[max(scores, key=lambda k: scores[k])]
 
 def part2():
@@ -76,62 +84,7 @@ def part2():
   work = data.split()
   players, points = int(work[0]), int(work[-2])*100
 
-  class Node:
-    def __init__(self, val=None, nxt=None, prev=None):
-      self.val = val
-      self.next = nxt
-      self.prev = prev
-
-    def __str__(self):
-      out = [self.val]
-
-      current = self.next
-
-      while current != self:
-        out.append(current.val)
-        current = current.next
-
-      return str(out)
-  active = Node(0)
-  active.next = active
-  active.prev = active
-
-  zero = active
-
-  current_marble = 1
-  current_player = 0
-
-  scores = {}
-
-  while current_marble <= points:
-    if (current_marble % 23) == 0:
-      if current_player not in scores:
-        scores[current_player] = 0
-
-      remove = active
-      
-      for _ in range(7):
-        remove = remove.prev
-
-      old_prev = remove.prev
-      remove.prev.next = remove.next
-      remove.next.prev = old_prev
-
-      active = remove.next
-
-      scores[current_player] += remove.val + current_marble
-    else:
-      insert_after = active.next
-      old_next = insert_after.next
-
-      new_node = Node(current_marble, old_next, insert_after)
-      insert_after.next = new_node
-      old_next.prev = new_node
-
-      active = new_node
-
-    current_marble += 1
-    current_player = (current_player + 1) % players
+  scores = play_game(players, points)
   return scores[max(scores, key=lambda k: scores[k])]
 
 def main():
