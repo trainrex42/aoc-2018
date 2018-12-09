@@ -10,17 +10,6 @@ class Node:
     self.next = nxt
     self.prev = prev
 
-  def __str__(self):
-    out = [self.val]
-
-    current = self.next
-
-    while current != self:
-      out.append(current.val)
-      current = current.next
-
-    return str(out)
-
 def play_game(players, points):
   active = Node(0)
   active.next = active
@@ -43,9 +32,8 @@ def play_game(players, points):
       for _ in range(7):
         remove = remove.prev
 
-      old_prev = remove.prev
       remove.prev.next = remove.next
-      remove.next.prev = old_prev
+      remove.next.prev = remove.prev
 
       active = remove.next
 
