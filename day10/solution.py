@@ -52,7 +52,7 @@ def print_particles(particles):
   grid = [[" " for _ in range(h-hm+1)] for _ in range(w-wm+1)]
 
   for p in particles:
-    grid[p.x-wm][p.y-hm] = "#"
+    grid[p.x-wm][p.y-hm] = "█"
 
   out = ""
 
