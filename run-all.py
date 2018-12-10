@@ -25,7 +25,10 @@ def runDay(directory):
 
 def main():
   print("\u001b[32;1mAdvent \u001b[34;1mof \u001b[31;1mCode \u001b[0m2018")
-  for directory in glob.glob("./day*/"):
+
+  dirs = sorted(list(glob.glob("./day*/")), key=lambda k: int(k.split("day")[1][:-1]))
+
+  for directory in dirs:
     p1,p2 = runDay(directory)
     day = directory.split("day")[1][:-1]
     print("\u001b[33;1mDay", day)
