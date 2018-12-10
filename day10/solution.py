@@ -49,9 +49,6 @@ def print_particles(particles):
   h = max(particles, key=lambda k: k.y).y
   wm = min(particles, key=lambda k: k.x).x
   hm = min(particles, key=lambda k: k.y).y
-
-  print(w,h,wm,hm)
-
   grid = [[" " for _ in range(h-hm+1)] for _ in range(w-wm+1)]
 
   for p in particles:
